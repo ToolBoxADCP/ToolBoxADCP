@@ -1,0 +1,29 @@
+ clf,hold on
+ index=0;
+ NivMax=size(HarmoniqueU,2);
+ if(i==1),NivMax=NivMax-2;end
+ if(i==4),NivMax=NivMax-2;end
+ if(NbNiv==1);tsNiv=1;
+   else tsNiv=floor(linspace(1,NivMax,NbNiv));
+ end
+ for niv = tsNiv;
+    t=Harm(niv).temps/24;
+    u=Harm(niv).res+Harm(niv).lin(1)+Harm(niv).lin(2)*t*24;
+    subplot(NbNiv,1,NbNiv-index);index=index+1;
+    II=ii(1:end-1);
+    plot(t(II)-Tmes+T0,u(II));
+    xlabel('temps (jour)'),ylabel('vitesse (mm/s)')
+    if(NbNiv>1),legend(['niveau ' num2str(niv)]),end
+    grid on
+    axis([JourMin JourMax -500 500])
+ end
+ 
+titre=[NomMois(DebDessin(mois).month) ...
+    cellstr([DessNom ' Residuelle','  -  Mouillage : ',...
+        Nom(i,:)])];
+ subplot(NbNiv,1,1),title(titre)
+ fichM=[num2str(fichMouillage) num2str(char(cellstr(DessNom)))...
+     '_res_'  num2str(char(cellstr(Nom(i,:)))) ...
+     '_Mois' num2str(DebDessin(mois).month)];
+ saveas(gcf,fichM,'fig')
+ saveas(gcf,fichM,'png')

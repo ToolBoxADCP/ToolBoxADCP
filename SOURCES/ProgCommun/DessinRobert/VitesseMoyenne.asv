@@ -1,0 +1,24 @@
+for i = 1:size(Nom,1);
+  DonneesCampagne(Nom(i,:));
+  load(MouillagePropre)
+  
+%% Vitesse Moyenne :
+  NivMax=MaxProf(Nom(i,:));
+  VitMoy.u=mean(vitesse.u(:,1:NivMax),2);
+  VitMoy.v=mean(vitesse.v(:,1:NivMax),2);
+
+%% Ellipse et Vitesse projetée :
+  [EllipseMoy VitMoy_proj]=ellipse...
+      (1,size(VitMoy.u,1),VitMoy.u,VitMoy.v,0);
+  tetaMoy=EllipseMoy.teta;
+  
+%% Harmoniques
+  HarmoniqueForemanMoyenne
+  
+  save(MouillageMoy,'Temps','VitMoy','VitMoy_proj',...
+      'tetaMoy','NivMax','EllipseMoy',...
+      'HarmoniqueMoyU','HarmoniqueMoyV',...
+      'HarmoniqueMoyU_proj','HarmoniqueMoyV_proj')
+  
+  fprint
+end

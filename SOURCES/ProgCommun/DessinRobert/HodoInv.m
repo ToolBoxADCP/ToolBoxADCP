@@ -1,0 +1,62 @@
+function HodoInv(vit,t,x_0,y_0,t_0,h,dlat,dlong)
+ech=1;
+
+%% Attention on suppose que t est lin�airement continu
+DTexpr=1;
+c1=['y';'c';'m'];
+c2=['.y';'.c';'.m'];
+c3=['.-y';'.-c';'.-m'];
+
+u=vit.u*1E-3; u(3)=NaN;%en m/s
+v=vit.v*1E-3; %en m/s
+ii=find(isnan(u)==0);
+if(size(ii,1)>=2)
+    u=interp1(t(ii),u(ii),t,'linear',0);
+    ii=find(isnan(v)==0);v=interp1(t(ii),v(ii),t,'linear',0);
+    if(size(ii,1)~=size(v,1))
+        figure(3),clf,plot(t,v,'.b','MarkerSize',5),hold on,...
+            plot(t(ii),v(ii),'.r','MarkerSize',5)%,pause
+        title('valeur interpolee')
+    end
+    dt=min(diff(t*24*60))*60; %on suppose que dt est constant
+    dt_jour=floor(DTexpr/dt*24*3600)/2;
+    A=ones(size(u,1),size(u,1));
+
+    x=dt/ech*tril(A)*u/dlong;
+    y=(tril(A)*v)*dt/ech/dlat;
+
+    X0=x_0-x(end);Y0=y_0-y(end);
+    x=x+X0;y=y+Y0;
+
+    xx=[x(1:dt_jour:end);x(end)];
+    yy=[y(1:dt_jour:end);y(end)];
+
+    figure(1),
+      plot(x_0,y_0,'*r')
+      hold on
+      plot(x,y,c1(h,:))
+
+    figure(2),
+      plot(x_0,y_0,'*r')
+      hold on
+      plot(xx,yy,c3(h,:))
+
+    for i=size(t,1):-dt_jour:1;
+       figure(1),plot(x(i),y(i),c2(h,:),'MarkerSize',15)
+    end
+
+    figure(1),
+      if(h==1),
+        i=1;
+          text(x(i),y(i),datestr(t(i)+t_0,0),'Color',[1,0.4,0.6])
+        i=size(t,1);
+          text(x(i),y(i),datestr(t(i)+t_0,0),'Color',[1,0.4,0.6])
+      end
+    figure(2),
+      if(h==1),
+        i=1;
+          text(x(i),y(i),datestr(t(i)+t_0,0),'Color',[1,0.4,0.6])
+        i=size(t,1);
+          text(x(i),y(i),datestr(t(i)+t_0,0),'Color',[1,0.4,0.6])
+      end
+end

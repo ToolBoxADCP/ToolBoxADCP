@@ -1,0 +1,43 @@
+DT_MoyGlissante=1;
+T_init=T0;
+figure(1),clf
+figure(2),clf
+
+DonneesCampagne('MS2')
+load(MouillagePropre_proj);Niv=P.depth;
+load(MouillageMoy);Fl=Niv.*VitMoy_proj.u;
+temps=datum_str(Temps)-T_init;
+[MoyGliss,Fl_]=MoyGlissante(temps,Fl,DT_MoyGlissante,0);
+figure(1),plot(temps,(MoyGliss),':c')
+% Décalage en temps pour mettre les jours (5 10 15) en face du sticker.
+figure(2),plot(temps+1,(MoyGliss),':c') 
+nanmean(MoyGliss)
+figure(1),hold on
+figure(2),hold on
+
+DonneesCampagne('MS1')
+load(MouillagePropre_proj);Niv=P.depth;
+load(MouillageMoy);Fl=Niv.*VitMoy_proj.u;
+temps=datum_str(Temps)-T_init;
+[MoyGliss,Fl_]=MoyGlissante(temps,Fl,DT_MoyGlissante,0);
+figure(1),plot(temps,(MoyGliss),'k')
+% Décalage en temps pour mettre les jours (5 10 15) en face du sticker.
+figure(2),plot(temps+1,(MoyGliss),'k') 
+nanmean(MoyGliss)
+figure(1),hold on
+figure(2),hold on
+
+DonneesCampagne('MN ')
+load(MouillagePropre_proj);Niv=P.depth;
+load(MouillageMoy);Fl=Niv.*VitMoy_proj.u;
+temps=datum_str(Temps)-T_init;
+[MoyGliss,Fl_]=MoyGlissante(temps,Fl,DT_MoyGlissante,0);
+MoyGliss=-MoyGliss;
+figure(1),plot(temps,(MoyGliss),':k')
+% Décalage en temps pour mettre les jours (5 10 15) en face du sticker.
+figure(2),plot(temps+1,(MoyGliss),':k') 
+nanmean(MoyGliss)
+figure(1),hold on
+figure(2),hold on
+
+

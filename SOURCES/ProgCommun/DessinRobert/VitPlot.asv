@@ -1,0 +1,37 @@
+VitMin=-1000;VitMax=1000;
+if (strcmp(Campagne,'Tulear1')==1),
+VitMin=-1250;VitMax=1000;
+end
+if (strcmp(Campagne,'Mayotte1')==1),
+VitMin=-500;VitMax=500;
+end
+
+ clf,hold on
+ index=0;
+ if(NbNiv==1);tsNiv=1;
+   else tsNiv=floor(linspace(1,NivMax,NbNiv));;
+ end
+for niv = tsNiv;
+    t=datum_str(Temps)-Tmes;
+    subplot(NbNiv,1,NbNiv-index);index=index+1;
+    plot(t(ii),vit(ii,niv));
+    xlabel('temps (jour)'),ylabel('vitesse (mm/s)')
+    %if(NbNiv>1),legend(['niveau ' num2str(niv)],'Location','SouthWest'),end
+    if(NbNiv>1),legend(['niveau ' num2str(niv)],'Location','Best'),end
+    grid on
+    axis([JourMin JourMax VitMin VitMax])
+if(strcmp(Campagne,'Tulear1')|strcmp(Campagne,'Tulear2'))
+    BarrePrelev(Tmes,T_fin,Nom(i,:))
+end
+end
+
+ box on
+ titre=[NomMois(DebDessin(mois).month) ...
+    cellstr([DessNom '  -  Mouillage : ',...
+        Nom(i,:)])];
+ subplot(NbNiv,1,1),title(titre)
+ fichM=[num2str(fichMouillage) num2str(char(cellstr(DessNom))) ...
+      num2str(char(cellstr(Nom(i,:))))...
+     '_Mois' num2str(DebDessin(mois).month)];
+ saveas(gcf,fichM,'fig')
+ saveas(gcf,fichM,'png')

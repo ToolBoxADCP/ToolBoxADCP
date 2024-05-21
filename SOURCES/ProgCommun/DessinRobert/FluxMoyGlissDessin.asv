@@ -1,0 +1,17 @@
+DT_MoyGlissante=2;
+
+DonneesCampagne('MS2')
+load(FluxReconst(1,:))
+[MoyGliss,Vit_]=MoyGlissante(FluxSection.temps/24,Flux.u,...
+DT_MoyGlissante,0);
+figure(1),plot(FluxSection.temps/24,(MoyGliss),'k')
+figure(2),plot(FluxSection.temps/24+1,(MoyGliss),'k')
+
+hold on
+DonneesCampagne('MN ')
+load(FluxReconst(1,:))
+[MoyGliss,Vit_]=MoyGlissante(FluxSection.temps/24,Flux.u,...
+DT_MoyGlissante,0);
+figure(1),plot(FluxSection.temps/24,(MoyGliss),':c')
+figure(2),plot(FluxSection.temps/24+1,(MoyGliss),':c')
+plot(FluxSection.temps/24+1,-(MoyGliss),':c')

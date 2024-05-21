@@ -1,0 +1,32 @@
+fichMouillage='.\Images\VitessesResiduelles\';
+NbNiv=3;
+
+%% Recherche des différents Mois
+SepareMois
+
+
+%% Plot
+fichMouillage='.\Images\VitesseMoyenne\Plot\';
+mois=0;
+    
+for ind=PremMes.month:DerMes.month
+    mois=mois+1;
+    Tmes=datum_str(DebDessin(mois))-1;
+    T_fin=datum_str(FinDessin(mois))-Tmes;
+    for i = 1:size(Nom,1);
+       DonneesCampagne(Nom(i,:));
+       load(MouillageMoy)
+       time1=(datum_str(Temps)-Tmes);
+       ii=find(time1<T_fin & time1>1);
+       if(isempty(ii)==0)
+
+
+for i = 1:size(Nom,1);
+  DonneesCampagne(Nom(i,:));
+  load(MouillageAnalyse)
+     Harm=HarmoniqueU;DessNom='U';DessRes
+     Harm=HarmoniqueV;DessNom='V';DessRes
+  load(MouillageAnalyse_proj)
+     Harm=HarmoniqueU;DessNom='Uproj';DessRes
+     Harm=HarmoniqueV;DessNom='Uortho';DessRes
+end

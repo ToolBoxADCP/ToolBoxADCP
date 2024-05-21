@@ -1,0 +1,24 @@
+fichMouillage='.\DessinRobert\DispersalEllipse\';
+for i = 1:size(Nom,1);
+  figure(3),clf,hold on
+  DonneesCampagne(Nom(i,:));
+  load(MouillagePropre)
+  
+  %faire changer un trait de couleur en fonction de la profondeur
+  Nmax=MaxProf(vitesse);
+  c=zeros(Nmax,3);colormap(c);c=colormap('jet');
+  load(MouillageAnalyse)
+  for niv=1:Nmax;
+      DessinEllipse(Ellipse(niv),1,c(niv,:),1,0,0)
+  end
+  xlabel('Vitesse Est'),ylabel('Vitesse Nord')
+  colorbar
+  titre=[cellstr([Nom(i,:)])]
+
+  fichM=[num2str(fichMouillage) num2str(char(cellstr(Nom(i,:))))];
+  saveas(gcf,fich,'fig')
+  saveas(gcf,fich,'png')
+
+  pause
+end
+

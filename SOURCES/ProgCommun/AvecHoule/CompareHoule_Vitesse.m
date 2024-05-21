@@ -1,0 +1,9 @@
+DessinVitesseMoyenne_loc
+DonneesCampagne(Nom(i,:));
+load(MouillageMoy)
+Tmes=datenum(011,1,1)-1
+time1=(datum_str(Temps)-Tmes);
+ii=1:size(time1,1);
+Harm=HarmoniqueMoyU_proj;vit=VitMoy_proj.u;DessNom='Uproj';
+signe=signeTous(i);
+DessResVitPlot

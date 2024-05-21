@@ -1,0 +1,21 @@
+function pcol_uni(t,z,vit,fich,mouil,mois,NomMois,Tmes,T_fin,...
+    JourMin,JourMax,Campagne);
+clf,
+  Zmin=min(min(z));
+  Zmax=max(max(z));
+      [ligne,col]=size(vit);vectY=ones(1,col);
+      pcolor(t*vectY,z,vit),box on
+      colorbar,shading flat,
+      titre=[NomMois cellstr(['    Mouillage:',mouil])];
+      title(titre), axis([JourMin JourMax Zmin Zmax])
+xlabel('Jour')
+texte=['Profondeur'];ylabel(texte)
+if(strcmp(Campagne,'Tulear1')|strcmp(Campagne,'Tulear2'))
+    BarrePrelev(Tmes,T_fin,mouil)
+end
+
+
+      Fichier=[fich '_' mouil '_' num2str(mois)];
+      saveas(gcf,Fichier,'fig')
+      saveas(gcf,Fichier,'png')
+        

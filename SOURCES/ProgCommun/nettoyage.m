@@ -1,0 +1,11 @@
+Temps.day=Temps.day(ii);
+Temps.month=Temps.month(ii);
+Temps.year=Temps.year(ii);
+Temps.hour=Temps.hour(ii);
+Temps.minute=Temps.minute(ii);
+Temps.seconde=Temps.seconde(ii);
+vitesse.ubt=vitesse.ubt(ii);
+vitesse.vbt=vitesse.vbt(ii);
+vitesse.u=vitesse.u(ii,:);
+vitesse.v=vitesse.v(ii,:);
+depth=depth(ii,:);

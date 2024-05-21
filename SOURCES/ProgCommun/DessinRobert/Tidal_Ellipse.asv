@@ -1,0 +1,24 @@
+fichMouillage='.\Images\TidalEllipse\';
+NbNiv=1;
+c_e=[':r';':b';':k'];
+c_f=['r';'b';'k'];
+c_e=['r';'b';'k'];
+x0=0;y0=0;
+
+clf,
+
+for i = 1:size(Nom,1);
+  DonneesCampagne(Nom(i,:));
+  load(MouillageAnalyse)
+  %subplot(2,2,i),
+  for niv = floor(size(HarmoniqueU,2);
+    HarmU=HarmoniqueU(niv);
+    HarmV=HarmoniqueV(niv);
+    figure(i),clf,hold on
+    tid_ell
+    fichM=[num2str(fichMouillage) num2str(char(cellstr(Nom(i,:))))  ...
+      '_Niv' num2str(m)];
+    saveas(gcf,fichM,'fig')
+    saveas(gcf,fichM,'png')
+  end
+end

@@ -1,0 +1,130 @@
+fichTransect='.\DessinRobert\Transect\coupe\';
+Passe=['Passe Sud ';'Passe Nord';'Centre    ']
+PasseDimi=['MS';'MN';'MC']
+ind_ref=[1;3;4];
+
+for i=1:size(Passe,1)
+DonneesCampagne(Nom(ind_ref(i),:))
+load(Ftransth)
+
+MinU=999;MinV=MinU;
+MaxU=-999;MaxV=MaxU;
+for Tronc=1:nbTronc;
+A=[dfile_th(Tronc,:) '*'];a=ls(A);NbTrans(Tronc)=size(a,1);
+
+ for j=1:NbTrans(Tronc);
+  Tfile=[dfile(Tronc,:) num2str(j)];load (Tfile);
+  Tfile_th=[dfile_th(Tronc,:) num2str(j)];load (Tfile_th);
+  
+  MinU=min(MinU,min(min(Tvitesse.u)));
+  MinU=min(MinU,min(min(Tvitesse_th.u)));
+  MaxU=max(MaxU,max(max(Tvitesse.u)));
+  MaxU=max(MaxU,max(max(Tvitesse_th.u)));
+
+  MinV=min(MinV,min(min(Tvitesse.v)));
+  MinV=min(MinV,min(min(Tvitesse_th.v)));
+  MaxV=max(MaxV,max(max(Tvitesse.v)));
+  MaxV=max(MaxV,max(max(Tvitesse_th.v)));
+ end
+
+ for j=1:NbTrans(Tronc);
+  Tfile=[dfile(Tronc,:) num2str(j)];load (Tfile);
+  Tfile_th=[dfile_th(Tronc,:) num2str(j)];load (Tfile_th);
+
+  %Vitesse U
+  figure(1)
+  subplot(1,2,1)
+  pcolor(T_ADCPpr.dp'/1000,-dsurface',Tvitesse.u')
+  ii=find(isnan(T_Temps_th.day)==0);
+  if(~isempty(ii))
+      titre=[cellstr(['U - Passe : ' Passe(i,:)]) ...
+             cellstr(['du ' num2str(T_Temps_th.day(ii(1))) '/' ...
+             num2str(T_Temps_th.month(ii(1))) '/'...
+             num2str(T_Temps_th.year(ii(1))) ' - ' ...
+             num2str(T_Temps_th.hour(ii(1))) 'h' ...
+             num2str(T_Temps_th.minute(ii(1)))])]; 
+  else
+            titre=cellstr(['U - Passe : ' Passe(i,:)]);
+  end
+                
+  title(titre)
+  caxis([MinU MaxU])
+  colorbar('horiz')
+  xlabel('distance a la cote (km)'),ylabel('Profondeur (m)')
+
+  subplot(1,2,2)
+  pcolor(GPSth(Tronc).dpas'/1000,-dsurface_th',Tvitesse_th.u')
+  colorbar('horiz')
+  caxis([MinU MaxU])
+  if(~isempty(ii))
+  titre=[cellstr(['Transect ' num2str(j) ...
+                  ' - Troncon ' num2str(Tronc)])...
+         cellstr(['au ' num2str(T_Temps_th.day(ii(end))) '/' ...
+             num2str(T_Temps_th.month(ii(end))) '/'...
+             num2str(T_Temps_th.year(ii(end))) ' - ' ...
+             num2str(T_Temps_th.hour(ii(end))) 'h' ...
+             num2str(T_Temps_th.minute(ii(end)))])]; 
+  else
+            titre=cellstr(['Transect ' num2str(j) ...
+                  ' - Troncon ' num2str(Tronc)]);
+  end
+  title(titre)
+  xlabel('distance a la cote (km)'),ylabel('Profondeur (m)')
+  
+  fichM=[fichTransect 'U' ...
+      num2str(char(cellstr(PasseDimi(i,:))))...
+      '_Trans' num2str(j) '_Tronc' num2str(Tronc) ];
+  
+  saveas(gcf,fichM,'fig')
+  saveas(gcf,fichM,'png')
+  
+  %Vitesse V
+  figure(2)
+  subplot(1,2,1)
+  pcolor(T_ADCPpr.dp'/1000,-dsurface',Tvitesse.v')
+  ii=find(isnan(T_Temps_th.day)==0);
+  if(~isempty(ii))
+      titre=[cellstr(['V - Passe : ' Passe(i,:)]) ...
+             cellstr(['du ' num2str(T_Temps_th.day(ii(1))) '/' ...
+             num2str(T_Temps_th.month(ii(1))) '/'...
+             num2str(T_Temps_th.year(ii(1))) ' - ' ...
+             num2str(T_Temps_th.hour(ii(1))) 'h' ...
+             num2str(T_Temps_th.minute(ii(1)))])]; 
+  else
+            titre=cellstr(['V - Passe : ' Passe(i,:)]);
+  end
+  title(titre)
+  caxis([MinV MaxV])
+  colorbar('horiz')
+  xlabel('distance a la cote (km)'),ylabel('Profondeur (m)')
+
+  subplot(1,2,2)
+  pcolor(GPSth(Tronc).dpas'/1000,-dsurface_th',Tvitesse_th.v')
+  colorbar('horiz')
+  caxis([MinV MaxV])
+    if(~empty(ii))
+titre=[cellstr(['Transect ' num2str(j) ...
+                  ' - Troncon ' num2str(Tronc)])...
+         cellstr(['au ' num2str(T_Temps_th.day(ii(end))) '/' ...
+             num2str(T_Temps_th.month(ii(end))) '/'...
+             num2str(T_Temps_th.year(ii(end))) ' - ' ...
+             num2str(T_Temps_th.hour(ii(end))) 'h' ...
+             num2str(T_Temps_th.minute(ii(end)))])]; 
+   else
+            titre=cellstr(['Transect ' num2str(j) ...
+                  ' - Troncon ' num2str(Tronc)])
+  end
+ title(titre)
+  xlabel('distance a la cote (km)'),ylabel('Profondeur (m)')
+  
+  fichM=[fichTransect 'V' ...
+      num2str(char(cellstr(PasseDimi(i,:))))...
+      '_Trans' num2str(j) '_Tronc' num2str(Tronc) ];
+  
+  saveas(gcf,fichM,'fig')
+  saveas(gcf,fichM,'png')
+
+
+ end
+end
+end

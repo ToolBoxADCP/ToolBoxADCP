@@ -1,0 +1,26 @@
+ComparaisonTansportBarriereHoule
+DescriptifCampagne
+DT_MoyGlissante=1;
+T_init=T0;
+T0_houle=T0+datenum(1999,12,31);
+
+load FluxReconst_MN
+DonneesCampagne('MN ')
+load(MouillagePropre_proj);
+t=datum_str(Temps)-T_init;
+t_MN=t(1:end-1);
+[MoyGliss_MN,Fl_MN]=MoyGlissante(t_MN,Flux.u,DT_MoyGlissante/2,0);
+
+load FluxReconst_MS
+DonneesCampagne('MS2')
+load(MouillagePropre_proj);
+t=datum_str(Temps)-T_init;
+t_MS=t(1:end-1);
+[MoyGliss_MS,Fl_MS]=MoyGlissante(t_MS,Flux.u,DT_MoyGlissante/2,0);
+
+figure
+plot(t_MN,MoyGliss_MN)
+plot(t_MS,-MoyGliss_MS)
+mean(-MoyGliss_MN)
+mean(MoyGliss_MS)
+
